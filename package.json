@@ -1,0 +1,14 @@
+{
+  "name": "symmetricaag",
+  "version": "1.0.0",
+  "description": "Anshel-Anshel-Goldfeld key exchange using symmetric groups",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:build": "tsc -w",
+    "start:run": "nodemon build/index.js",
+    "start": "concurrently npm:start:*"
+  },
+  "author": "Alice Parrish",
+  "license": "ISC"
+}
