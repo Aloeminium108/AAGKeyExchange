@@ -1,5 +1,7 @@
-import { conjugateKey, generateKeys, generateSharedKey } from "./SGRepresentation/aag-protocol"
-import { permutation, randomPermutation, multiply, identity, inverse, conjugate, generateSet, commute, equals } from "./SGRepresentation/permutation"
+import { AAGProtocol } from "./crypto/aag-protocol"
+import { NonabelianGroup } from "./groups/NonabelianGroup"
+import { Permutation, SymmetricGroup } from "./groups/SymmetricGroup"
+
 
 const SIZE = 16
 const LENGTH = 32
@@ -20,23 +22,23 @@ function testProtocol(length: number, size: number, numtests: number) {
   let numFailedTests = 0
 
   for (let i = 0; i < numtests; i++) {
-    const alice = generateKeys(length, size)
-    const bob = generateKeys(length, size)
+    const alice = new AAGProtocol(length, size, SymmetricGroup, Permutation)
+    const bob = new AAGProtocol(length, size, SymmetricGroup, Permutation)
   
-    const aliceConjugatedkey = conjugateKey(alice.publicKey, bob.privateKey)
-    const bobConjugatedkey = conjugateKey(bob.publicKey, alice.privateKey)
+    const aliceConjugatedkey = bob.conjugateKey(alice.publicKey)
+    const bobConjugatedkey = alice.conjugateKey(bob.publicKey)
   
-    const sharedKeyA = generateSharedKey(aliceConjugatedkey, alice.privateTuple, alice.privateKey, true)
-    const sharedKeyB = generateSharedKey(bobConjugatedkey, bob.privateTuple, bob.privateKey, false)
-    const correctKey = commute(alice.privateKey, bob.privateKey)
+    const sharedKeyA = alice.generateSharedKey(aliceConjugatedkey, Permutation, true)
+    const sharedKeyB = bob.generateSharedKey(bobConjugatedkey, Permutation, false)
+    const correctKey = alice.privateKey.commute(bob.privateKey)
 
-    if (equals(sharedKeyA, correctKey) && equals(sharedKeyB, correctKey)) {
+    if ((sharedKeyA.equals(correctKey)) && sharedKeyB.equals(correctKey)) {
       console.log('TEST PASSED')
     } else {
       console.log('TEST FAILED: ')
-      console.log(`Shared key calculated by Alice: ${sharedKeyA}`)
-      console.log(`Shared key calculated by Bob: ${sharedKeyB}`)
-      console.log('Correct shared key:', commute(alice.privateKey, bob.privateKey)) 
+      console.log(`Shared key calculated by Alice: ${sharedKeyA.vector}`)
+      console.log(`Shared key calculated by Bob: ${sharedKeyB.vector}`)
+      console.log('Correct shared key:', correctKey.vector) 
       numFailedTests++
     }
   }
