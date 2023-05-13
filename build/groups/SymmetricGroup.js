@@ -10,6 +10,30 @@ const NonabelianGroup_1 = require("./NonabelianGroup");
 class SymmetricGroup extends NonabelianGroup_1.NonabelianGroup {
     constructor(length, size, element) {
         super(length, size, element);
+        let usedElements = [];
+        const e = new element(length);
+        for (let i = 0; i < size; i++) {
+            let publicElement = new element(length).random();
+            let nonUnique = true;
+            while (nonUnique) {
+                publicElement = new element(length).random();
+                // Check if the Permutation is equal to the identity element
+                if ((publicElement.equals(e)))
+                    continue;
+                // Check if the Permutation is its own inverse
+                if (publicElement.equals(publicElement.inverse()))
+                    continue;
+                // Check if the Permutation has been used already
+                nonUnique = false;
+                usedElements.forEach(element => {
+                    if (publicElement.equals(element))
+                        nonUnique = true;
+                });
+            }
+            this.set[i] = publicElement;
+            usedElements.push(publicElement);
+            usedElements.push(publicElement.inverse());
+        }
     }
 }
 exports.SymmetricGroup = SymmetricGroup;

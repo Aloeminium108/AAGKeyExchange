@@ -43,7 +43,7 @@ function testProtocol(length: number, size: number, numtests: number) {
   }
 
   if (numFailedTests === 0) {
-    console.log('ALL TESTS PASSED')
+    console.log('ALL TESTS PASSED!!!')
   } else {
     console.log(`${numFailedTests} TESTS FAILED`)
   }

@@ -10,6 +10,35 @@ export class SymmetricGroup extends NonabelianGroup<Permutation> {
 
   constructor(length: number, size: number, element: { new(length: number): Permutation} ) {
     super(length, size, element)
+    let usedElements: Array<Permutation> = []
+    const e = new element(length)
+  
+    for (let i = 0; i < size; i++) {
+      let publicElement = new element(length).random()
+      let nonUnique = true
+  
+      while (nonUnique) {
+        publicElement = new element(length).random()
+  
+        // Check if the Permutation is equal to the identity element
+        if ((publicElement.equals(e))) continue
+  
+        // Check if the Permutation is its own inverse
+        if (publicElement.equals(publicElement.inverse())) continue
+  
+        // Check if the Permutation has been used already
+        nonUnique = false
+        usedElements.forEach(element => {
+          if (publicElement.equals(element)) nonUnique = true
+        })
+      }
+  
+      this.set[i] = publicElement
+  
+      usedElements.push(publicElement)
+      usedElements.push(publicElement.inverse())
+  
+    }
   }
 
 }
