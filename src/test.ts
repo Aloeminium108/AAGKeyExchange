@@ -6,16 +6,6 @@ const SIZE = 16
 const LENGTH = 32
 const NUMTESTS = 20
 
-// console.log('Alice\'s public key:', alice.publicKey)
-// console.log('Alice\'s private key:', alice.privateKey)
-// console.log('Bob\'s public key:', bob.publicKey)
-// console.log('Bob\'s private key:', bob.privateKey)
-
-// console.log(`Shared key calculated by Alice: ${sharedKeyA}`)
-// console.log(`Shared key calculated by Bob: ${sharedKeyB}`)
-
-// console.log('Correct shared key:', commute(alice.privateKey, bob.privateKey)) 
-
 function testProtocol(length: number, size: number, numtests: number) {
 
   let numFailedTests = 0
