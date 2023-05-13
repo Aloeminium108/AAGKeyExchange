@@ -20,8 +20,8 @@ function testProtocol(length: number, size: number, numtests: number) {
   let numFailedTests = 0
 
   for (let i = 0; i < numtests; i++) {
-    const alice = generateKeys(LENGTH, SIZE)
-    const bob = generateKeys(LENGTH, SIZE)
+    const alice = generateKeys(length, size)
+    const bob = generateKeys(length, size)
   
     const aliceConjugatedkey = conjugateKey(alice.publicKey, bob.privateKey)
     const bobConjugatedkey = conjugateKey(bob.publicKey, alice.privateKey)
