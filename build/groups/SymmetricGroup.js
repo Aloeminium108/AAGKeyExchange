@@ -40,6 +40,7 @@ exports.SymmetricGroup = SymmetricGroup;
 class Permutation extends NonabelianGroup_1.Element {
     constructor(length) {
         super(length);
+        this.representation = () => this.vector;
         this.random = () => {
             let rand = new Permutation(this.vector.length);
             rand.vector.sort(() => Math.random() - 0.5);
@@ -77,16 +78,16 @@ class Permutation extends NonabelianGroup_1.Element {
             const invX = this.inverse();
             return invX.multiply(y.multiply(this));
         };
+        this.commute = (y) => {
+            const invX = this.inverse();
+            const invY = y.inverse();
+            return invX.multiply(invY.multiply(this.multiply(y)));
+        };
         let e = [];
         for (let i = 0; i < length; i++) {
             e.push(i);
         }
         this.vector = e;
-    }
-    commute(y) {
-        const invX = this.inverse();
-        const invY = y.inverse();
-        return invX.multiply(invY.multiply(this.multiply(y)));
     }
 }
 exports.Permutation = Permutation;

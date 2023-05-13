@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AAGProtocol = void 0;
 class AAGProtocol {
-    constructor(length, size, group, element) {
+    constructor(group, element, length, size) {
         this.conjugateKey = (publicKey) => {
             let conjugatedKey = Array(publicKey.set.length);
             publicKey.set.forEach((element, index) => {

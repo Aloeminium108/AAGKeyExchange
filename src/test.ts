@@ -1,32 +1,39 @@
 import { AAGProtocol } from "./crypto/aag-protocol"
-import { Permutation, SymmetricGroup } from "./groups/SymmetricGroup"
+import { NonabelianGroup, Element } from "./groups/NonabelianGroup"
+import { SymmetricGroup, Permutation } from "./groups/SymmetricGroup"
 
 
 const SIZE = 16
 const LENGTH = 32
 const NUMTESTS = 20
 
-function testProtocol(length: number, size: number, numtests: number) {
+function testProtocol<G extends NonabelianGroup<E>, E extends Element<any>>(
+  group: { new(length: number, size: number, element: { new(legnth: number): E}): G }, 
+  element: { new(length: number): E},
+  length: number, 
+  size: number, 
+  numtests: number
+) {
 
   let numFailedTests = 0
 
   for (let i = 0; i < numtests; i++) {
-    const alice = new AAGProtocol(length, size, SymmetricGroup, Permutation)
-    const bob = new AAGProtocol(length, size, SymmetricGroup, Permutation)
+    const alice = new AAGProtocol(group, element, length, size)
+    const bob = new AAGProtocol(group, element, length, size)
   
     const aliceConjugatedkey = bob.conjugateKey(alice.publicKey)
     const bobConjugatedkey = alice.conjugateKey(bob.publicKey)
   
-    const sharedKeyA = alice.generateSharedKey(aliceConjugatedkey, Permutation, true)
-    const sharedKeyB = bob.generateSharedKey(bobConjugatedkey, Permutation, false)
+    const sharedKeyA = alice.generateSharedKey(aliceConjugatedkey, element, true)
+    const sharedKeyB = bob.generateSharedKey(bobConjugatedkey, element, false)
     const correctKey = alice.privateKey.commute(bob.privateKey)
 
     if ((sharedKeyA.equals(correctKey)) && sharedKeyB.equals(correctKey)) {
       console.log('TEST PASSED')
     } else {
       console.log('TEST FAILED: ')
-      console.log(`Shared key calculated by Alice: ${sharedKeyA.vector}`)
-      console.log(`Shared key calculated by Bob: ${sharedKeyB.vector}`)
+      console.log(`Shared key calculated by Alice: ${sharedKeyA.representation}`)
+      console.log(`Shared key calculated by Bob: ${sharedKeyB.representation}`)
       console.log('Correct shared key:', correctKey.vector) 
       numFailedTests++
     }
@@ -40,4 +47,4 @@ function testProtocol(length: number, size: number, numtests: number) {
 
 }
 
-testProtocol(LENGTH, SIZE, NUMTESTS)
+testProtocol(SymmetricGroup, Permutation, LENGTH, SIZE, NUMTESTS)

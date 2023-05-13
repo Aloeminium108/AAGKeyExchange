@@ -56,6 +56,8 @@ export class Permutation extends Element<Permutation> {
     this.vector = e
   }
 
+  representation = () => this.vector
+
   random = () => {
     let rand = new Permutation(this.vector.length)
     rand.vector.sort(() => Math.random() - 0.5)
@@ -105,7 +107,7 @@ export class Permutation extends Element<Permutation> {
     return invX.multiply(y.multiply(this))
   }
 
-  commute(y: Permutation): Permutation {
+  commute = (y: Permutation): Permutation => {
     const invX = this.inverse()
     const invY = y.inverse()
     return invX.multiply(invY.multiply(this.multiply(y)))

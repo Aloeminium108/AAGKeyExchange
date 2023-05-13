@@ -14,10 +14,12 @@ export abstract class Element<T extends Element<any>> {
 
   constructor(public length: number) {}
 
+  abstract representation: () => any
+
   abstract equals: (y: T) => boolean
   abstract multiply: (y: T) => T 
   abstract conjugate: (y: T) => T
+  abstract commute: (y: T) => T
   abstract inverse: () => T
   abstract random: () => T
-
 }
