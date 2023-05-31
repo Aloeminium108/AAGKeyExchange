@@ -7,13 +7,14 @@ export class AAGProtocol<G extends NonabelianGroup<E>, E extends Element<any>> {
   privateKey: E
 
   constructor(
-    group: { new(length: number, size: number, element: { new(legnth: number): E}): G }, 
+    group: { new(length: number, size: number, element: { new(legnth: number): E}, options?: any): G }, 
     element: { new(length: number): E},
     length: number, 
     size: number, 
+    options?: any
     ) {
 
-    this.publicKey = new group(length, size, element)
+    this.publicKey = new group(length, size, element, options)
     this.privateTuple = Array<choice>(size)
     
     for (let i = 0; i < size; i++) {

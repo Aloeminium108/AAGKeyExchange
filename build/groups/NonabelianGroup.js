@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Element = exports.NonabelianGroup = void 0;
 class NonabelianGroup {
-    constructor(length, size, element) {
+    constructor(length, size, element, options) {
         this.set = Array(size);
     }
 }

@@ -1,6 +1,7 @@
 import { AAGProtocol } from "./crypto/aag-protocol"
 import { NonabelianGroup, Element } from "./groups/NonabelianGroup"
 import { SymmetricGroup, Permutation } from "./groups/SymmetricGroup"
+import { GeneralLinearGroup, Matrix } from "./groups/GeneralLinearGroup"
 
 
 const SIZE = 16
@@ -12,14 +13,15 @@ function testProtocol<G extends NonabelianGroup<E>, E extends Element<any>>(
   element: { new(length: number): E},
   length: number, 
   size: number, 
-  numtests: number
+  numtests: number,
+  options?: any
 ) {
 
   let numFailedTests = 0
 
   for (let i = 0; i < numtests; i++) {
-    const alice = new AAGProtocol(group, element, length, size)
-    const bob = new AAGProtocol(group, element, length, size)
+    const alice = new AAGProtocol(group, element, length, size, options)
+    const bob = new AAGProtocol(group, element, length, size, options)
   
     const aliceConjugatedkey = bob.conjugateKey(alice.publicKey)
     const bobConjugatedkey = alice.conjugateKey(bob.publicKey)
@@ -47,4 +49,11 @@ function testProtocol<G extends NonabelianGroup<E>, E extends Element<any>>(
 
 }
 
-testProtocol(SymmetricGroup, Permutation, LENGTH, SIZE, NUMTESTS)
+//testProtocol(SymmetricGroup, Permutation, LENGTH, SIZE, NUMTESTS)
+
+const matrix = new Matrix(4)
+const matrix2 = new Matrix(4)
+
+Matrix.setField(5)
+
+console.log(matrix.multiply(matrix2).representation())

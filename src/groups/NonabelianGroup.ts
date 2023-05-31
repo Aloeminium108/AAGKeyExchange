@@ -4,7 +4,7 @@ export class NonabelianGroup<E extends Element<any>> {
 
   public set: Array<E>
 
-  constructor(length: number, size: number, element: { new(length: number): E} ) {
+  constructor(length: number, size: number, element: { new(length: number): E}, options?: any ) {
     this.set = Array<E>(size)  
   }
 

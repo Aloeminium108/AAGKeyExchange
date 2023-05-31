@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AAGProtocol = void 0;
 class AAGProtocol {
-    constructor(group, element, length, size) {
+    constructor(group, element, length, size, options) {
         this.conjugateKey = (publicKey) => {
             let conjugatedKey = Array(publicKey.set.length);
             publicKey.set.forEach((element, index) => {
@@ -10,7 +10,7 @@ class AAGProtocol {
             });
             return conjugatedKey;
         };
-        this.publicKey = new group(length, size, element);
+        this.publicKey = new group(length, size, element, options);
         this.privateTuple = Array(size);
         for (let i = 0; i < size; i++) {
             let rand = Math.random() * 3;
