@@ -51,9 +51,15 @@ function testProtocol<G extends NonabelianGroup<E>, E extends Element<any>>(
 
 //testProtocol(SymmetricGroup, Permutation, LENGTH, SIZE, NUMTESTS)
 
-const matrix = new Matrix(4)
-const matrix2 = new Matrix(4)
+const matrix = Matrix.fromArrays([
+  [1, 4],
+  [0, 3]
+])
+const matrix2 = Matrix.fromArrays([
+  [2, 0],
+  [2, 3]
+])
 
-Matrix.setField(5)
+Matrix.setField(7)
 
 console.log(matrix.multiply(matrix2).representation())

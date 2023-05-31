@@ -34,7 +34,13 @@ function testProtocol(group, element, length, size, numtests, options) {
     }
 }
 //testProtocol(SymmetricGroup, Permutation, LENGTH, SIZE, NUMTESTS)
-const matrix = new GeneralLinearGroup_1.Matrix(4);
-const matrix2 = new GeneralLinearGroup_1.Matrix(4);
-GeneralLinearGroup_1.Matrix.setField(5);
+const matrix = GeneralLinearGroup_1.Matrix.fromArrays([
+    [1, 4],
+    [0, 3]
+]);
+const matrix2 = GeneralLinearGroup_1.Matrix.fromArrays([
+    [2, 0],
+    [2, 3]
+]);
+GeneralLinearGroup_1.Matrix.setField(7);
 console.log(matrix.multiply(matrix2).representation());

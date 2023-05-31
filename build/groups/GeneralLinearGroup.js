@@ -33,6 +33,8 @@ class GeneralLinearGroup extends NonabelianGroup_1.NonabelianGroup {
     }
 }
 exports.GeneralLinearGroup = GeneralLinearGroup;
+// TODO add protections to make sure invalid matrices aren't created
+// TODO add protections to make sure incompatible matrices aren't multiplied
 class Matrix extends NonabelianGroup_1.Element {
     constructor(length) {
         super(length);
@@ -118,6 +120,11 @@ class Matrix extends NonabelianGroup_1.Element {
             e.push(column);
         }
         this.vector = e;
+    }
+    static fromArrays(entries) {
+        let matrix = new Matrix(entries.length);
+        matrix.vector = entries;
+        return matrix;
     }
     static setField(field) {
         Matrix.field = field;

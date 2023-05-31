@@ -38,6 +38,9 @@ export class GeneralLinearGroup extends NonabelianGroup<Matrix> {
 
 }
 
+// TODO add protections to make sure invalid matrices aren't created
+// TODO add protections to make sure incompatible matrices aren't multiplied
+
 export class Matrix extends Element<Matrix> {
 
   vector: Array<Array<number>>
@@ -111,8 +114,6 @@ export class Matrix extends Element<Matrix> {
 
     let product = new Matrix(this.vector.length)
 
-    // TODO Test matrix multiply function
-
     for (let i = 0; i < this.length; i++) {
       for (let j = 0; j < this.length; j++) {
         product.vector[i][j] = dotProduct(this.row(i), y.column(j), Matrix.field)
@@ -156,7 +157,15 @@ export class Matrix extends Element<Matrix> {
     return column
   }
 
-  static setField(field: number) {
+  static fromArrays(entries: Array<Array<number>>): Matrix {
+    let matrix = new Matrix(entries.length)
+
+    matrix.vector = entries
+
+    return matrix
+  }
+
+  static setField(field: number): void {
     Matrix.field = field
   }
 
