@@ -40,6 +40,7 @@ export class GeneralLinearGroup extends NonabelianGroup<Matrix> {
 
 // TODO add protections to make sure invalid matrices aren't created
 // TODO add protections to make sure incompatible matrices aren't multiplied
+// TODO properly implement fields 
 
 export class Matrix extends Element<Matrix> {
 
